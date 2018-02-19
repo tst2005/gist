@@ -1,7 +1,6 @@
 #!/bin/sh
-#
-# print the subject
-#
+
+# source: https://gist.github.com/tst2005/797af97fd263677da9e3eede873887ac
 
 for i in $*
 do
