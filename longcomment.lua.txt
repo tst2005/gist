@@ -1,0 +1,12 @@
+--[[    print("a")
+        print("b")
+]]--    print("c")
+        print("D")      --[[
+        print("e")
+        print("f")      ]]--
+
+--[[--  print("a")
+        print("b")
+--]]--  print("c")      --[[--
+        print("D")
+        print("E")      --]]--
