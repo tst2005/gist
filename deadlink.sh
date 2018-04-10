@@ -1,14 +1,14 @@
 #!/bin/sh
 
 deadlink() {
-	local NO_ABS=0
-	local NO_REL=0
+	local NO_ABS=false
+	local NO_REL=false
 	while [ $# -gt 0 ]; do
 		case "$1" in
 		-h|--help)
 			echo "Usage: $0 [--na|--no-absolute|--nr|--no-relative] [--] <directory>"; exit 0;;
-		--na|--no-abs*) shift ; NO_ABS=1 ;;
-		--nr|--no-rel*) shift ; NO_REL=1 ;;
+		--na|--no-abs*) shift ; NO_ABS=true ;;
+		--nr|--no-rel*) shift ; NO_REL=true ;;
 		--) shift; break ;;
 		-*) echo >&2 "Bad option $1" ; exit 1 ;;
 		*) break;
@@ -32,10 +32,10 @@ deadlink() {
 					/*) false ;;
 					*)  true ;;
 				esac; then
-					[ $NO_REL -eq 1 ] && continue
+					${NO_REL:-false} && continue
 					link="$1/$from/$link"
 				else
-					[ $NO_ABS -eq 1 ] && continue
+					${NO_ABS:-false} && continue
 				fi
 				[ ! -e "$link" ] && echo "!! $1/$file -> $link"
 			;;
