@@ -9,22 +9,21 @@ deadlink() {
 			echo "Usage: $0 [--na|--no-absolute|--nr|--no-relative] [--] <directory>"; exit 0;;
 		--na|--no-abs*) shift ; NO_ABS=1 ;;
 		--nr|--no-rel*) shift ; NO_REL=1 ;;
-		--) break ;;
-		-*) echo "Bad option $1" ; exit 1 ;;
+		--) shift; break ;;
+		-*) echo >&2 "Bad option $1" ; exit 1 ;;
 		*) break;
 		esac
 	done
 	while [ $# -gt 0 ]; do
-		local scanfrom="$1"
-		find "$scanfrom" -type l -printf "p %P\nl %l\n" \
+		find "$1" -type l -printf "p %P\nl %l\n" \
 		| (
 		local file=""
 		local from=""
 		local link=""
 		while read type line; do
-			case $type in
+			case "$type" in
 			p)
-					file="$line"
+				file="$line"
 				from="$(dirname "$file")"
 			;;
 			l)
@@ -34,11 +33,11 @@ deadlink() {
 					*)  true ;;
 				esac; then
 					[ $NO_REL -eq 1 ] && continue
-					link="$scanfrom/$from/$link"
+					link="$1/$from/$link"
 				else
 					[ $NO_ABS -eq 1 ] && continue
 				fi
-				[ ! -e "$link" ] && echo "!! $scanfrom/$file -> $link"
+				[ ! -e "$link" ] && echo "!! $1/$file -> $link"
 			;;
 			esac
 		done
