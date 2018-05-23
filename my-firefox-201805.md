@@ -8,4 +8,4 @@
 * "Open Tabs Next to Current"
 
 En test:
-* [Firefox Multi-Account Containers]
+* "Firefox Multi-Account Containers"
