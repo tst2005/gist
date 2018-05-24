@@ -1,0 +1,8 @@
+printf '{
+ wantids: [ "foo", "bar" ],
+ data: [
+  { id: "bar", info: "bababa" },
+  { id: "buz", info: "bububu" },
+  { id: "foo", info: "fofofo" }
+ ]
+}' | jq -c '...'
