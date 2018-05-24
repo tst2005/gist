@@ -1,8 +1,38 @@
-printf '{
- "wantids": [ "foo", "bar" ],
- "data": [
-  { "id": "bar", "info": "bababa" },
-  { "id": "buz", "info": "bububu" },
-  { "id": "foo", "info": "fofofo" }
- ]
-}' | jq -c '.'
+getrawdata() {
+        printf '[
+                { "id": "bar", "info": "A babab" },
+                { "id": "buz", "info": "B ububu" },
+                { "id": "foo", "info": "A fofof" }
+        ]';
+}
+rawdata_to_db() {
+        jq '{db: .}';
+}
+
+keepresult() {
+        jq '(.result|map({key:., value:true})|from_entries) as $want | .db |= map(select($want[.id]))|del(.result)'
+}
+
+search() {
+        local arg="$1"
+        jq '
+                def grep($arg): test($arg);
+                def myfilter: '"$arg"';
+                .+{ result: [.db[]|select( myfilter ).id] }
+        '
+}
+
+getdb() {
+        getrawdata | rawdata_to_db
+}
+dbquery() {
+        search "$1" | keepresult
+}
+
+sample() {
+        getdb |
+        dbquery '.info|grep("^A")' |
+        dbquery '(.info|grep("^Z")|not)' |
+        dbquery '.id!="zz"'
+}
+sample
