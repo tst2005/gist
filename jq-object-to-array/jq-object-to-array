@@ -1,0 +1,26 @@
+printf '{
+  "foo": "a1",
+  "bar": "b1",
+  "buz": "c1"
+}, {
+  "foo": "a2",
+  "bar": "b2",
+  "buz": "c2"
+}, {
+  "foo": "a3",
+  "bar": "b3",
+  "buz": "c3"
+}, {
+  "foo": "a4",
+  "bar": "b4",
+  "buz": "c4"
+}' | jq '.'
+
+# wanted result:
+printf '[
+[ "foo", "bar", "buz" ],
+[ "a1",  "b1",  "c1"  ],
+[ "a2",  "b2",  "c2"  ],
+[ "a3",  "b3",  "c3"  ],
+[ "a4",  "b4",  "c4"  ]
+]'
