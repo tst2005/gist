@@ -24,7 +24,7 @@ join1() {
 	jq '.db2 as $db2 |.db1|=map( .id|= $db2[(.|tostring)] )'
 
 	# with db1 and db2 and joined field as id2
-	#jq 'def xx($resultfield) .db2 as $db2 |.db1 |= map( .+{ $resultfield: (.| $db2[(.id|tostring)])} ); xx("id2")'
+	#jq 'def xx($resultfield) .db2 as $db2 |.db1 |= map( .+{ ($resultfield): (.| $db2[(.id|tostring)])} ); xx("id2")'
 }
 echo "## sample1 | join1 ##"
 sample1 | join1
@@ -38,7 +38,7 @@ sample1 | join1
 
 join2() {
 	# with db1 only
-	jq '.db2 as $db2 |.db1 | {db1: map( .id|= $db2[(.|tostring)] ) }'
+	jq '.db2 as $db2 |.db1 | {"db1": map( .id|= $db2[(.|tostring)] ) }'
 }
 echo "## sample1 | join2 ##"
 sample1 | join2
@@ -87,4 +87,22 @@ join21() {
 }
 echo "## sample2 | join21 ##"
 sample2 | join21
-
+# Result:
+#[
+#  {
+#    "id": "id11",
+#    "name": "entry1"
+#  },
+#  {
+#    "id": "id22",
+#    "name": "entry2"
+#  },
+#  {
+#    "id": "id22",
+#    "name": "entry3"
+#  },
+#  {
+#    "id": "id44",
+#    "name": "entry4"
+#  }
+#]
