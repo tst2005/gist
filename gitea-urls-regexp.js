@@ -32,6 +32,10 @@ https://
 |	user/settings
 |	user/settings/.*
 |	repo/.*
+|	org(?
+	:
+	|	/.*/.*
+	)
 |	notifications
 |	[^/]+/[^/]+
 	(?
