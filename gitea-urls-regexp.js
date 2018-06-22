@@ -10,8 +10,20 @@ https://
 )
 /
 (?
-:	
-|	/
+:
+|	admin(?
+	:
+	|	/users
+	|	/users/new
+	|	/orgs
+	|	/org/create
+	|	/repos
+	|	/auths
+	|	/auths/new
+	|	/config
+	|	/notices
+	)
+|	api/swagger
 |	issues
 |	pulls
 |	explore/.*
@@ -21,10 +33,9 @@ https://
 |	user/settings/.*
 |	repo/.*
 |	notifications
-|	notifications\?.*
 |	[^/]+/[^/]+
 	(?
-	:	
+	:
 	|	/
 		(?
 		:	src/(?:	branch
@@ -43,4 +54,11 @@ https://
 		|	/.*
 		)
 	)
+	(?
+	:
+	|	\?.*
+	)(?
+	:
+	|	#.*)
+
 )
