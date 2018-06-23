@@ -46,12 +46,14 @@ https://
 			|	commit
 			)
 		|	_edit
+		|	_new
 		|	wiki
 		|	issues
 		|	milestones
 		|	labels
 		|	settings
 		|	commit
+		|	commits
 		)
 		(?
 		:
